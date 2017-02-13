@@ -1,14 +1,14 @@
 working_dir: 3blades/deployment
 
 # app image
-hubserver_image: 3blades/hubserver:latest
+hubserver_image: 3blades/hubserver:{{ hubserver_version | default('latest') }}
 openresty_server: 3blades/openresty:on-premise
 docker_stats_image: 3blades/docker-stats:latest
 notifications_server_image: 3blades/notifications-server:latest
 logspout_image: 3blades/logspout:latest
 
 # data image
-postgres_data_image: busybox
+postgres_data_image: busybox:{{ db_version | default('latest') }}
 
 # set user server images
 job_py2_image: 3blades/job-py2:latest
