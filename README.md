@@ -78,9 +78,11 @@ You may need to add read permissions to SSH key:
 
 - Create a random `APP_SECRET_KEY`:
 
+    ```   
     >>> import os
     >>> os.urandom(24).encode('hex')
     'cd3bd02592195ffac2a1b36f466f096aa9ca768cd67125b8'
+    ```
 
 - `SMTP_HOST`, `SMTP_PORT`, `SMTP_USERNAME` and `SMTP_PASSWORD` values are used to authenticate to SMTP service. They should be replaced with your respective SMTP configurations and are necessary to enable system notifications, including password reset emails.
 
