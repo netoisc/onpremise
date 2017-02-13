@@ -1,5 +1,5 @@
 # play 1
-- name: Installing dependencies (like docker, awscli)
+- name: Installing dependencies
   hosts: all
   become: true
   gather_facts: false
@@ -18,7 +18,7 @@
   roles:
     - { role: artifacts}
 
-- name: launch the stack
+- name: Launch stack
   hosts: all
   become: true
   roles:

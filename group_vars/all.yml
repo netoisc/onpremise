@@ -1,5 +1,28 @@
 working_dir: 3blades/deployment
-pull_images_always: "{{ force_pull_images | default('no')}}" 
+
+# data image
+postgres_data_image: busybox
+
+# set user server images
+job_py2_image: 3blades/job-py2:latest
+job_py3_image: 3blades/job-py3:latest
+model_py2_image: 3blades/model_py2_image:latest
+model_py3_image: 3blades/model-py3:latest
+notebook_scipy_image: 3blades/scipy-notebook:latest
+notebook_lab_image: 3blades/jupyterlab:latest
+
+# set datasource images
+cassandra_image: cassandra
+postgres_image: postgres
+mongo_image: mongo
+mysql_image: mysql
+
+# set networks
+stack_network: threeblades
+deployment_network: deployment-threeblades
+
+# pull images and set usage strings
+pull_images_always: "{{ force_pull_images | default('no')}}"
 cassandra_usage: >
           python => \"from cassandra.cluster import Cluster
 

@@ -1,69 +1,78 @@
-- name: pull the hubserver image
+# pull stack images
+- name: Pull hubserver image
   docker_image:
-    name: 3blades/hubserver:latest
+    name: "{{ hubserver_image }}"
     state: present
     force: "{{ pull_images_always }}"
-    timeout: 3600 
-- name: pull the openresty image (the on-premise version)
+    timeout: 3600
+
+- name: Pull openresty image
   docker_image:
-    name: 3blades/openresty:on-premise
-    state: present
-    force: "{{ pull_images_always }}"
-- name: pull the notifications-server image
-  docker_image:
-    name: 3blades/notifications-server:latest
-    state: present
-    force: "{{ pull_images_always }}"
-- name: pull the logspout image
-  docker_image:
-    name: 3blades/logspout:latest
-    state: present
-    force: "{{ pull_images_always }}"
-- name: pull the docker-stats image
-  docker_image:
-    name: 3blades/docker-stats:latest
+    name: "{{ openresty_server }}"
     state: present
     force: "{{ pull_images_always }}"
 
-- name: pull jupyterlab image
+- name: Pull notifications-server image
   docker_image:
-    name: 3blades/jupyterlab:latest
+    name: "{{ notifications_server_image }}"
     state: present
     force: "{{ pull_images_always }}"
 
-- name: pull scipy-notebook image
+- name: Pull logspout image
   docker_image:
-    name: 3blades/scipy-notebook:latest
+    name: "{{ logspout_image }}"
     state: present
     force: "{{ pull_images_always }}"
 
-- name: pull job-py3 image
+- name: Pull docker-stats image
   docker_image:
-    name: 3blades/job-py3:latest
-    state: present
-    force: "{{ pull_images_always }}"
-    
-- name: pull model-py3 image
-  docker_image:
-    name: 3blades/model-py3:latest
+    name: "{{ docker_stats_image }}"
     state: present
     force: "{{ pull_images_always }}"
 
-# pull the data-sources images
-- name: pull mongo image
+# pull jupyter notebook images
+- name: Pull jupyterlab image
   docker_image:
-    name: mongo
+    name: "{{ notebook_lab_image }}"
     state: present
-    
-- name: pull cassandra image
+    force: "{{ pull_images_always }}"
+
+- name: Pull scipy-notebook image
   docker_image:
-    name: cassandra
+    name: "{{ notebook_scipy_image }}"
     state: present
-- name: pull mysql image
+    force: "{{ pull_images_always }}"
+
+# pull model and job images
+- name: Pull job-py3 image
   docker_image:
-    name: mysql
+    name: "{{ job_py3_image }}"
     state: present
-- name: pull postgres image
+    force: "{{ pull_images_always }}"
+
+- name: Pull model-py3 image
   docker_image:
-    name: postgres
+    name: "{{ model_py3_image }}"
+    state: present
+    force: "{{ pull_images_always }}"
+
+# pull data source images
+- name: Pull MongoDB image
+  docker_image:
+    name: "{{ mongo_image }}"
+    state: present
+
+- name: Pull Cassandra image
+  docker_image:
+    name: "{{ cassandra_image }}"
+    state: present
+
+- name: Pull MySQL image
+  docker_image:
+    name: "{{ mysql_image }}"
+    state: present
+
+- name: Pull PostgreSQL image
+  docker_image:
+    name: "{{ postgres_image }}"
     state: present

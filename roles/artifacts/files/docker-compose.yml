@@ -47,7 +47,7 @@ services:
     ports:
       - "5432:5432"
     volumes_from:
-      - container:postgresql-data:rw 
+      - container:postgresql-data:rw
   cache:
     networks:
       - threeblades
@@ -82,7 +82,7 @@ services:
       - threeblades
     image: 3blades/logspout:latest
     ports:
-      - "8888:80"    
+      - "8888:80"
     environment:
       - DEBUG=True
     volumes:
@@ -115,7 +115,5 @@ services:
       - db
       - search
       - cache
-    
-
 networks:
   threeblades:
