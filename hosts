@@ -1,1 +1,0 @@
-hubserver ansible_ssh_host=external_facing_ip_address ansible_ssh_port=22

@@ -1,5 +1,12 @@
 working_dir: 3blades/deployment
 
+# app image
+hubserver_image: 3blades/hubserver:latest
+openresty_server: 3blades/openresty:on-premise
+docker_stats_image: 3blades/docker-stats:latest
+notifications_server_image: 3blades/notifications-server:latest
+logspout_image: 3blades/logspout:latest
+
 # data image
 postgres_data_image: busybox
 
