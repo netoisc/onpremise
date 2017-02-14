@@ -1,11 +1,17 @@
 working_dir: 3blades/deployment
+# image tags
+hubserver_image_tag: "{{ hubserver_version | default ('latest') }}"
+openresty_image_tag: "{{ openresty_version | default ('on-premise') }}"
+docker_stats_image_tag: "{{ docker_stats_version | default ('latest') }}"
+notifications_server_image_tag: "{{ notifications_server_version | default ('latest') }}"
+logspout_image_tag: "{{ logspout_version | default ('latest') }}"
 
 # app image
-hubserver_image: 3blades/hubserver:{{ hubserver_version | default('latest') }}
-openresty_server: 3blades/openresty:on-premise
-docker_stats_image: 3blades/docker-stats:latest
-notifications_server_image: 3blades/notifications-server:latest
-logspout_image: 3blades/logspout:latest
+hubserver_image: "3blades/hubserver:{{ hubserver_image_tag }}"
+openresty_image: "3blades/openresty:{{ openresty_image_tag }}"
+docker_stats_image: "3blades/docker-stats:{{ docker_stats_image_tag }}"
+notifications_server_image: "3blades/notifications-server:{{ notifications_server_image_tag }}"
+logspout_image: "3blades/logspout:{{ logspout_image_tag }}"
 
 # data image
 postgres_data_image: busybox:{{ db_version | default('latest') }}
@@ -27,6 +33,13 @@ mysql_image: mysql
 # set networks
 stack_network: threeblades
 deployment_network: deployment-threeblades
+
+# set volumes
+hubserver_volume: "/workspaces:/workspaces"
+docker_socket_mount: "/var/run/docker.sock:/var/run/docker.sock"
+
+# env file
+env_file: env
 
 # pull images and set usage strings
 pull_images_always: "{{ force_pull_images | default('no')}}"

@@ -2,7 +2,7 @@
   file: path='{{ working_dir }}' state=directory
 
 - name: Copy the docker-compose yaml file to host
-  copy: dest='{{ working_dir }}/docker-compose.yml'  force=yes src=docker-compose.yml
+  template: src=docker-compose.j2  dest='{{ working_dir }}/docker-compose.yml'
 
 # Obtain IP facts from ipify.org
 - name: Get public IPv4 address

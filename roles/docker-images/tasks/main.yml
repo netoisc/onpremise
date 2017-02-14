@@ -8,7 +8,7 @@
 
 - name: Pull openresty image
   docker_image:
-    name: "{{ openresty_server }}"
+    name: "{{ openresty_image }}"
     state: present
     force: "{{ pull_images_always }}"
 

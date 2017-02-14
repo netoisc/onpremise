@@ -1,0 +1,119 @@
+version: '2'
+services:
+  celery:
+    networks:
+      - {{ stack_network }}
+    image: {{ hubserver_image }}
+    command: bash -c "sleep 15 && /bin/bash run_celery.sh"
+    env_file: {{ env_file }}
+    volumes:
+      - {{ hubserver_volume }}
+    links:
+      - db
+      - cache
+      - search
+      - broker
+  beat:
+    networks:
+      - {{ stack_network }}
+    image: {{ hubserver_image }}
+    command: bash -c "sleep 15 && /bin/bash run_celery_beat.sh"
+    env_file: {{ env_file }}
+    volumes:
+      - {{ hubserver_volume }}
+    links:
+      - db
+      - cache
+      - search
+      - broker
+  app:
+    networks:
+      - {{ stack_network }}
+    image: {{ hubserver_image }}
+    command: bash -c "sleep 15 && /bin/bash run.sh"
+    env_file: env
+    volumes:
+      - {{ hubserver_volume }}
+    links:
+      - db
+      - cache
+      - search
+    ports:
+      - "8000:80"
+  db:
+    networks:
+      - {{ stack_network }}
+    image: postgres
+    ports:
+      - "5432:5432"
+    volumes_from:
+      - container:postgresql-data:rw
+  cache:
+    networks:
+      - {{ stack_network }}
+    image: redis
+    ports:
+      - "6379:6379"
+  search:
+    networks:
+      - {{ stack_network }}
+    image: elasticsearch:2.4
+    ports:
+      - "9200:9200"
+  broker:
+    networks:
+      - {{ stack_network }}
+    image: rabbitmq
+  server:
+    networks:
+      - threeblades
+    image: {{ openresty_image }}
+    command: -p '' -c nginx.conf -g 'daemon off;'
+    env_file: {{ env_file }}
+    ports:
+      - "80:80"
+    links:
+      - app
+      - logspout
+      - cache
+      - notifications-server
+  logspout:
+    networks:
+      - {{ stack_network }}
+    image: {{ logspout_image }}
+    ports:
+      - "8888:80"
+    environment:
+      - DEBUG=True
+    volumes:
+      - {{ docker_socket_mount }}
+  stats:
+    networks:
+      - {{ stack_network }}
+    image: 3blades/docker-stats:latest
+    volumes:
+      - {{ docker_socket_mount }}
+    links:
+      - db
+      - cache
+  notifications-server:
+    networks:
+      - {{ stack_network }}
+    image: {{ notifications_server_image }}
+    ports:
+      - "3000:3000"
+    environment:
+      - REDIS_URL=redis://cache:6379/0
+  init-data:
+    networks:
+      - {{ stack_network }}
+    image: {{ hubserver_image }}
+    command: bash -c "sleep 30 && . ../env/bin/activate && python manage.py create_admin_user -u admin -f admin -e admin@admin.com -p admin"
+    env_file: {{ env_file }}
+    links:
+      - server
+      - db
+      - search
+      - cache
+networks:
+  {{ stack_network }}:

@@ -90,11 +90,12 @@ You may need to add read permissions to SSH key:
 
     ```
     ansible-playbook -s -i hosts full-stack-deployment.yml \
-    --e "force_pull_images=yes smtp_server=SMTP_HOST smtp_username=SMTP_USERNAME \
-    smtp_password=SMTP_PASSWORD app_secret_key=APP_SECRET_KEY SMTP_PORT=587"
+    --e "force_pull_images=yes smtp_server=SMTP_HOST \ smtp_username=SMTP_USERNAME \
+    smtp_password=SMTP_PASSWORD \ app_secret_key=APP_SECRET_KEY SMTP_PORT=587 \
+    hubserver_version=build-1000"
     ```
 
-  > The `force_pull_images` argument is only useful if there is a new version of our images and would like to force updates. In that case we have to run the ansible-plabook as before.
+  > `force_pull_images` re downloads images even if a local image is found on the host. If not set, `hubserver_version` defaults to :latest tag.
 
 You'll have to wait several minutes for the playbook to complete.
 
@@ -120,4 +121,4 @@ The ansible script creates environment types, which set memory size for containe
 
     $ sudo docker-compose -f 3blades/deployment/docker-compose.yml down
 
-- Then, run ansible playbook as you did before with new settings.
+- Re run ansible playbook.
