@@ -39,10 +39,12 @@ You could do all of this with docker-compose. As a matter of fact, the ansible p
 
 1. Install `ansible` on your **local** computer. We recommended installing ansible from `virtualenv` environment:
 
+    ```
     $ cd onpremise
     $ virtualenv env
     $ source env/bin/activate
     $ pip install ansible
+    ```
 
     > If installing ansible with Linux (Debian or Ubuntu), using Vagrant (VirtualBox) or other virtual machine distributions you may have to install openssl dependencies: `sudo apt-get install build-essential libssl-dev libffi-dev python-dev`
 
@@ -58,8 +60,10 @@ You could do all of this with docker-compose. As a matter of fact, the ansible p
     ```
 You may need to add read permissions to SSH key:
 
-    $ chmod 600 $SSH_KEY
-
+    ```
+    $ chmod 600
+    $ SSH_KEY
+    ```
 1. Test your SSH access into EC2 instance with external ip address:
 
     $ ssh -i key-name ubuntu@[external_facing_ip_address]
@@ -101,10 +105,12 @@ You'll have to wait several minutes for the playbook to complete.
 
 ## First login
 
-1. Once the playbook completes successfully, you'll be able to login to the application. Use the following credentials
+1. Once the playbook completes successfully, you'll be able to login to the application. Use the following credentials:
 
+     ```
      admin@admin.com
      admin
+     ```
      > Make sure you select `Remember me` option
 
 1. You'll be asked to change your password immediately. Provide the old password and a new one, then click `Change password`.
@@ -117,8 +123,8 @@ The ansible script creates environment types, which set memory size for containe
 
 ## Trouble shooting
 
-- To re run ansible playbook, log into host and run:
+To re run ansible playbook, log into host and run:
 
     $ sudo docker-compose -f 3blades/deployment/docker-compose.yml down
 
-- Re run ansible playbook.
+Re run ansible playbook.
